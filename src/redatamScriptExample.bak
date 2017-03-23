@@ -1,0 +1,12 @@
+RUNDEF Job
+   SELECTION ALL
+   UNIVERSE PERSONA.P01 = 1 AND PROV.PROV = 2
+
+
+TABLE TABLE2
+       TITLE "Lista por Áreas de : PERSONA.P1909"
+       AS AREALIST
+       OF RADIO, PERSONA.P1909 10.0 P1909
+       OUTPUTFILE DBF 'C:\Users\pipe\Downloads\educ'
+       //OUTPUTFILE ASCII "C:\Users\pipe\Downloads\educAscii"
+       OVERWRITE

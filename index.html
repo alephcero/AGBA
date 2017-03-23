@@ -1,0 +1,134 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>miBA</title>
+  <meta name="description" content="Socioeconomic variables visualization for Buenos Aires City by census block">
+  <meta name="fdg224" content="SitePoint">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.8/semantic.min.css">
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.8/semantic.min.js"></script>
+<!-- NAVBAR BEGINS -->
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">BAdata</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+      <!-- LINK TO CENSUS DATA SOURCE -->       
+          <li><a href="http://200.51.91.245/argbin/RpWebEngine.exe/PortalAction?&MODE=MAIN&BASE=CPV2010B&MAIN=WebServerMain.inl" target="_blank">Source</a></li>
+          <li><a href="#">Hide variables</a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Comune 1</a></li>
+              <li><a href="#">Comune 2</a></li>
+              <li><a href="#">Comune 3</a></li>
+              <li><a href="#">Comune 4</a></li>
+              <li><a href="#">Comune 5</a></li>
+              <li><a href="#">Comune 6</a></li>
+              <li><a href="#">Comune 7</a></li>
+              <li><a href="#">Comune 8</a></li>
+              <li><a href="#">Comune 9</a></li>
+              <li><a href="#">Comune 10</a></li>
+              <li><a href="#">Comune 11</a></li>
+              <li><a href="#">Comune 12</a></li>
+              <li><a href="#">Comune 13</a></li>
+              <li><a href="#">Comune 14</a></li>
+              <li><a href="#">Comune 15</a></li>
+
+            </ul>
+          </li>
+        </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- NAVBAR ENDS -->
+
+
+    <!-- Boostrap Column Layout -->
+<div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-3">
+      <!-- PANEL BEGINS -->
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">ABOUT</div>
+          <div class="panel-body">
+                <p>This map shows the data from the <a href ="https://es.wikipedia.org/wiki/Censo_argentino_de_2010" target="_blank">2010 Argentine Census</a> for Buenos Aires City at census block level. The census block is the smallest geographical unit for which the national census allows data query. You can extract this information by yourself using the <b>Source</b> link above. </p>
+                <p> <b>Click on a variable to visualize it</b></p>
+              </div>
+
+        <!-- List group ICONOS FROM HERE
+http://semantic-ui.com/elements/icon.html#user-actions
+        -->
+          <ul class="list-group">
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonEduc'><i class="student icon"></i></i>Head of household with college education (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonInmigration'><i class="world icon"></i>Head of household borned in another country (%)</button></li>
+
+
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonCel'><i class="world icon"></i>Households with celular phone (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonComp'><i class="world icon"></i>Households with computers (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonEmpty'><i class="world icon"></i>Empty dwellings (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonOwner'><i class="world icon"></i>Owners (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRent'><i class="world icon"></i>Tennants (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRegular'><i class="world icon"></i>Legally occupied (%)</button></li>
+
+          </ul>
+
+        </div>
+      <!-- PANEL ENDS -->
+
+        </div>
+      <!-- MAP BEGINS -->
+        <div class="col-md-9">
+          <div id="mapContainer">
+            <script src="js/map.js"></script>
+            <script src="data/data.js"></script>
+            <script src="js/scripts.js"></script>
+          </div>
+
+       </div>
+      <!-- MAP ENDS -->
+
+      </div>
+    </div>
+<!-- End Boostrap Column Layout-->
+
+
+
+
+ 
+  <!-- 
+  -->
+
+</body>
+</html>
