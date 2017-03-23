@@ -10,6 +10,9 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.8/semantic.min.css">
+  <!-- style sheet for mapzen.js -->
+  <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
+
   <link rel="stylesheet" href="css/styles.css" />
 
   <!--[if lt IE 9]>
@@ -22,18 +25,16 @@
   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.8/semantic.min.js"></script>
+  <!-- latest version of mapzen.js-->
+  <script src="https://mapzen.com/js/mapzen.js"></script>
+
+
 <!-- NAVBAR BEGINS -->
 
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
         <a class="navbar-brand" href="#">BAdata</a>
       </div>
 
@@ -41,13 +42,13 @@
         <ul class="nav navbar-nav">
       <!-- LINK TO CENSUS DATA SOURCE -->       
           <li><a href="http://200.51.91.245/argbin/RpWebEngine.exe/PortalAction?&MODE=MAIN&BASE=CPV2010B&MAIN=WebServerMain.inl" target="_blank">Source</a></li>
-          <li><a href="#">Hide variables</a></li>
-
+          <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>Hide menu</a></li>
+          <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="maximizeButton"><i class="maximize icon"></i></a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zoom to Comune <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Comune 1</a></li>
-              <li><a href="#">Comune 2</a></li>
+              <li><a href="#" id='comune1-button' >Comune 1</a></li>
+              <li><a href="#" id='comune2-button'>Comune 2</a></li>
               <li><a href="#">Comune 3</a></li>
               <li><a href="#">Comune 4</a></li>
               <li><a href="#">Comune 5</a></li>
@@ -61,71 +62,62 @@
               <li><a href="#">Comune 13</a></li>
               <li><a href="#">Comune 14</a></li>
               <li><a href="#">Comune 15</a></li>
-
             </ul>
-          </li>
+          </li>          
         </ul>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
+      </div><!-- /.navbar-collapse -->
+
   </nav>
   <!-- NAVBAR ENDS -->
 
 
-    <!-- Boostrap Column Layout -->
-<div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-3">
-      <!-- PANEL BEGINS -->
+
+  <div id="container">
+    <div id='sidebar'>
+       <!-- PANEL BEGINS -->
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">ABOUT</div>
           <div class="panel-body">
                 <p>This map shows the data from the <a href ="https://es.wikipedia.org/wiki/Censo_argentino_de_2010" target="_blank">2010 Argentine Census</a> for Buenos Aires City at census block level. The census block is the smallest geographical unit for which the national census allows data query. You can extract this information by yourself using the <b>Source</b> link above. </p>
-                <p> <b>Click on a variable to visualize it</b></p>
-              </div>
+              <p> You can shoose wether to show the data in quantiles or percentage</p>
+                <div class="btn-group" data-toggle="buttons-checkbox">
+                  <button type="button" class="btn btn-primary" id='percentButton'>Percent</button>
+                  <button type="button" class="btn btn-primary" id='quantileButton'>Quantile</button>
+                </div>
 
-        <!-- List group ICONOS FROM HERE
-http://semantic-ui.com/elements/icon.html#user-actions
-        -->
+                <p> <b>Click on a variable to visualize it</b></p>
+          </div>
+
+          <!-- List group ICONOS FROM HERE
+          http://semantic-ui.com/elements/icon.html#user-actions
+          -->
           <ul class="list-group">
             <li class="list-group-item"><button class="ui right labeled icon button" id='buttonEduc'><i class="student icon"></i></i>Head of household with college education (%)</button></li>
             <li class="list-group-item"><button class="ui right labeled icon button" id='buttonInmigration'><i class="world icon"></i>Head of household borned in another country (%)</button></li>
 
 
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonCel'><i class="world icon"></i>Households with celular phone (%)</button></li>
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonComp'><i class="world icon"></i>Households with computers (%)</button></li>
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonEmpty'><i class="world icon"></i>Empty dwellings (%)</button></li>
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonOwner'><i class="world icon"></i>Owners (%)</button></li>
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRent'><i class="world icon"></i>Tennants (%)</button></li>
-            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRegular'><i class="world icon"></i>Legally occupied (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonCel'><i class="mobile icon"></i>Households with celular phone (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonComp'><i class="laptop icon"></i>Households with computers (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonEmpty'><i class="file code outline icon"></i>Empty dwellings (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonOwner'><i class="home icon"></i>Owners (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRent'><i class="money icon"></i>Tennants (%)</button></li>
+            <li class="list-group-item"><button class="ui right labeled icon button" id='buttonRegular'><i class="legal icon"></i>Legally occupied (%)</button></li>
 
           </ul>
 
         </div>
       <!-- PANEL ENDS -->
-
-        </div>
-      <!-- MAP BEGINS -->
-        <div class="col-md-9">
-          <div id="mapContainer">
-            <script src="js/map.js"></script>
-            <script src="data/data.js"></script>
-            <script src="js/scripts.js"></script>
-          </div>
-
-       </div>
-      <!-- MAP ENDS -->
-
-      </div>
     </div>
-<!-- End Boostrap Column Layout-->
-
-
-
-
+    <div id='map'>
+      <script src="js/map.js"></script>
+      <script src="data/deptos.js"></script>
+      <script src="data/deptosCentroids.js"></script>
+      <script src="data/data.js"></script>
+      <script src="js/scripts.js"></script>
+    </div>
+  </div>
  
   <!-- 
   -->
