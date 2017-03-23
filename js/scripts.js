@@ -250,6 +250,15 @@ $("#comune2-button").click(function() {
     zoomToDepto(1)
 });
 
+
+
+
+
+
+
+
+        //VARIABLE BUTTONS
+
 $("#percentButton").click(function() {
     unitOfDisplay = 'percent'
 });
@@ -257,10 +266,6 @@ $("#quantileButton").click(function() {
     unitOfDisplay = 'quantile'
 });
 
-
-
-
-        //VARIABLE BUTTONS
 
 $('#buttonEduc').on('click', function(){
     currentMap = 'Education';
