@@ -22,6 +22,7 @@
 
 <body>
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.8/semantic.min.js"></script>
@@ -82,10 +83,12 @@
           <div class="panel-body">
                 <p>This map shows the data from the <a href ="https://es.wikipedia.org/wiki/Censo_argentino_de_2010" target="_blank">2010 Argentine Census</a> for Buenos Aires City at census block level. The census block is the smallest geographical unit for which the national census allows data query. You can extract this information by yourself using the <b>Source</b> link above. </p>
               <p> You can shoose wether to show the data in quantiles or percentage</p>
-                <div class="btn-group" data-toggle="buttons-checkbox">
-                  <button type="button" class="btn btn-primary" id='percentButton'>Percent</button>
-                  <button type="button" class="btn btn-primary" id='quantileButton'>Quantile</button>
+
+                <div class="btn-group" role="group" aria-label="...">
+                  <button type="button" class="btn btn-default" id='percentButton'>Percent</button>
+                  <button type="button" class="btn btn-default" id='quantileButton'>Quantile</button>
                 </div>
+
 
                 <p> <b>Click on a variable to visualize it</b></p>
           </div>

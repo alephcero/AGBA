@@ -145,23 +145,27 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    if (currentMap == 'Education') {
-        variableText = 'Head of household with college education (%)';
-        percent = props.P19_p;
-        quantile = props.P19_q;
-    }
-    if (currentMap == 'Inmigration') {
-        variableText = 'Head of household borned in another country (%)';
-        percent = props.P05_p;
-        quantile = props.P05_q;
-    } else {props}
-
-    this._div.innerHTML = '<h4>Census Block Information</h4>' +  (props ?
+    var variableText, percent,quantile
+    if(props){
+        if (currentMap == 'Education') {
+            variableText = 'Head of household with college education (%)';
+            percent = props.P19_p;
+            quantile = props.P19_q;
+        }
+        if (currentMap == 'Inmigration') {
+            variableText = 'Head of household borned in another country (%)';
+            percent = props.P05_p;
+            quantile = props.P05_q;
+        } 
+        this._div.innerHTML = '<h4>Census Block Information</h4>' + 
         '<b> Block ID: </b>' + props.REDCODE + '<br />' +
         '<b> Comune: </b>' + props.Comune + '<br />' + 
         '<b>' + variableText + ': </b>' + percent + '<br />'  +
         '<b> Quantile: </b>' + quantile  + '<br />'
-        : 'Hover over a block');
+        
+    } else {
+        this._div.innerHTML = 'Hover over a block'
+    }
 
 };
 
@@ -171,7 +175,7 @@ var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
+    var div = L.DomUtil.create('div', 'info legend quantile'),
         grades = [0, 1, 2, 3, 4, 5, 6, 7,8,9],
         labels = [];
 
@@ -185,11 +189,11 @@ legend.onAdd = function (map) {
     return div;
 };
 
-var legendPercent = L.control({position: 'bottomleft'});
+var legendPercent = L.control({position: 'bottomright'});
 
 legendPercent.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
+    var div = L.DomUtil.create('div', 'info legend percent'),
         grades = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
         labels = [];
 
@@ -255,15 +259,39 @@ $("#comune2-button").click(function() {
 
 
 
-
-
         //VARIABLE BUTTONS
 
 $("#percentButton").click(function() {
     unitOfDisplay = 'percent'
+    $('.percent').css('display','initial');
+    
+    $('#percentButton').css('background','#8c6bb1');
+    $('#percentButton').css('color','white');
+
+    $('#quantileButton').css('background','initial');
+    $('#quantileButton').css('color','initial');
+
+
+    $('.quantile').css('display','none');
 });
+
 $("#quantileButton").click(function() {
-    unitOfDisplay = 'quantile'
+    unitOfDisplay = 'quantile';
+    $('.percent').css('display','none');
+    $('#quantileButton').css('background','#d6604d');
+    $('#quantileButton').css('color','white');
+
+    $('#percentButton').css('background','initial');
+    $('#percentButton').css('color','initial');
+
+
+    $('.quantile').css('display','initial');
+});
+
+        //flip
+$("#card").flip({
+  axis: 'x',
+  trigger: 'hover'
 });
 
 

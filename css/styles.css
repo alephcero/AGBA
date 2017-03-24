@@ -6,7 +6,7 @@ html, body, #container {
 
 #sidebar {
   display: block;
-  width: 25%;
+  width: 23%;
   height: 100%;
   max-width: 100%;
   float: left;
@@ -14,7 +14,7 @@ html, body, #container {
 }
 #map {
   width: auto;
-  height: 95%;
+  height: 90%;
 /*  box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
 }
 
@@ -68,6 +68,16 @@ html, body, #container {
     width: 100%;
 }
 
-.btn-primary {
+.ui.button {
+  width: 100%;
+}
+
+.percent{
+  display: none;
+}
+
+.btn-group{
+  margin-left: 30%;
   margin-bottom: 10px;
 }
+
