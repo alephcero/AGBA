@@ -15,7 +15,6 @@ html, body, #container {
 #map {
   width: auto;
   height: 90%;
-/*  box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
 }
 
 
@@ -28,12 +27,15 @@ html, body, #container {
 .navbar-default .navbar-nav>li>a {
     color: #fff;
 }
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+.navbar-default .navbar-nav > li > a:hover {
     background-color: #ffffff;
     color: #403b3b;
     border-radius: 10px;
 }
 
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+}
 
 .info {
     padding: 6px 8px;
@@ -79,5 +81,9 @@ html, body, #container {
 .btn-group{
   margin-left: 30%;
   margin-bottom: 10px;
+}
+
+button.ui.right.labeled.icon:focus{
+    color: white;
 }
 

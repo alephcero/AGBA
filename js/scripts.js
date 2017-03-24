@@ -164,7 +164,7 @@ info.update = function (props) {
         '<b> Quantile: </b>' + quantile  + '<br />'
         
     } else {
-        this._div.innerHTML = 'Hover over a block'
+        this._div.innerHTML = '<h4>Census Block Information</h4>' + 'Hover over a block'
     }
 
 };
