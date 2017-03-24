@@ -183,7 +183,7 @@ legend.onAdd = function (map) {
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i]) + '"></i> ' +
-            grades[i] + ' Quintile <br />';
+            grades[i] + ' Q <br />';
     }
 
     return div;
