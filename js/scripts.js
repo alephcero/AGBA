@@ -288,12 +288,7 @@ $("#quantileButton").click(function() {
     $('.quantile').css('display','initial');
 });
 
-        //flip
-$("#card").flip({
-  axis: 'x',
-  trigger: 'hover'
-});
-
+//BUTTON BEHAVIOUR
 
 $('#buttonEduc').on('click', function(){
     currentMap = 'Education';
@@ -324,71 +319,100 @@ $('#buttonInmigration').on('click', function(){
 });
 
 
-//I HAVE TO CHANGE THE REST OF THE BUTTONS TO USE PERCENT
-
 $('#buttonCel').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Celular'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_q,unitOfDisplay));
+        });
+    }
+
 });
 
 $('#buttonComp').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Computer'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_q,unitOfDisplay));
+        });
+    }
+
 });
+
+
 
 $('#buttonEmpty').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Empty'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.V02_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.V02_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.V02_q,unitOfDisplay));
+        });
+    }
+
 });
 
 $('#buttonOwner').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Owner'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.PROP_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.PROP_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.PROP_q,unitOfDisplay));
+        });
+    }
+
 });
 
 $('#buttonRent').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Rent'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.INQ_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.INQ_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.INQ_q,unitOfDisplay));
+        });
+    }
 });
 
 $('#buttonRegular').on('click', function(){
     //set the current visualization we are dealing with
     currentMap = 'Regular'; 
 
-    geojson.eachLayer(function (layer) {
-       layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_q));
-       
-       //console.log(layer.feature.properties.Comune)  
-    });
+    if (unitOfDisplay == 'percent') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_p,unitOfDisplay));
+        });
+    } else {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_q,unitOfDisplay));
+        });
+    }
 });
 
