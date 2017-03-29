@@ -92,7 +92,7 @@ function resetHighlight(e) {
     //if for the property en unit of display that we wan to reset
 
     if (unitOfDisplay == 'percent') {
-        if (currentMap == 'Education') {var propReset = layer.feature.properties.P19_p}
+        if (currentMap == 'Education') {var propReset = layer.feature.properties.MNI_p}
         if (currentMap == 'Inmigration') {var propReset = layer.feature.properties.P05_p}
         if (currentMap == 'Celular') {var propReset = layer.feature.properties.H2819C_p}
         if (currentMap == 'Computer') {var propReset = layer.feature.properties.H2819B_p}
@@ -101,7 +101,7 @@ function resetHighlight(e) {
         if (currentMap == 'Rent') {var propReset = layer.feature.properties.INQ_p}
         if (currentMap == 'Regular') {var propReset = layer.feature.properties.TENREG_p}
     } else {
-        if (currentMap == 'Education') {var propReset = layer.feature.properties.P19_q}
+        if (currentMap == 'Education') {var propReset = layer.feature.properties.MNI_q}
         if (currentMap == 'Inmigration') {var propReset = layer.feature.properties.P05_q}
         if (currentMap == 'Celular') {var propReset = layer.feature.properties.H2819C_q}
         if (currentMap == 'Computer') {var propReset = layer.feature.properties.H2819B_q}
@@ -149,8 +149,8 @@ info.update = function (props) {
     if(props){
         if (currentMap == 'Education') {
             variableText = 'Head of household with college education (%)';
-            percent = props.P19_p;
-            quantile = props.P19_q;
+            percent = props.MNI_p;
+            quantile = props.MNI_q;
         }
         if (currentMap == 'Inmigration') {
             variableText = 'Head of household borned in another country (%)';
@@ -299,11 +299,11 @@ $('#buttonEduc').on('click', function(){
     currentMap = 'Education';
     if (unitOfDisplay == 'percent') {
         geojson.eachLayer(function (layer) {
-            layer.setStyle(style(layer.feature,layer.feature.properties.P19_p,unitOfDisplay));
+            layer.setStyle(style(layer.feature,layer.feature.properties.MNI_p,unitOfDisplay));
         });
     } else {
         geojson.eachLayer(function (layer) {
-            layer.setStyle(style(layer.feature,layer.feature.properties.P19_q,unitOfDisplay));
+            layer.setStyle(style(layer.feature,layer.feature.properties.MNI_q,unitOfDisplay));
         });
     }
 });
