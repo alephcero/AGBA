@@ -245,16 +245,133 @@ $("#list-btn").click(function() {
 
 
 $("#maximizeButton").click(function() {
-    map.setView(new L.LatLng(-34.602889, -58.442420), 12);
+    map.setView(new L.LatLng(-34.652889, -58.442420), 10);
 });
-$("#comune1-button").click(function() {
+$("#caba").click(function() {
+    map.setView(new L.LatLng(-34.602889, -58.442420), 13);
+});
+
+$("#almiranteBrown").click(function() {
+    // 'ALMIRANTE BROWN':'06028',
     zoomToDepto(0)
 });
-$("#comune2-button").click(function() {
+$("#avellaneda").click(function() {
+    // 'AVELLANEDA':'06035',
     zoomToDepto(1)
 });
+$("#berazategui").click(function() {
+    // 'BERAZATEGUI':'06091',
+    zoomToDepto(2)
+});
+$("#escobar").click(function() {
+    // 'ESCOBAR':'06252',
+    zoomToDepto(3)
+});
+$("#estebanEcheverria").click(function() {
+    // 'ESTEBAN ECHEVERRIA':'06260',
+    zoomToDepto(4)
+});
+$("#ezeiza").click(function() {
+    // 'EZEIZA':'06270',
+    zoomToDepto(5)
+});
+$("#florencioVarela").click(function() {
+    // 'FLORENCIO VARELA':'06274',
+    zoomToDepto(6)
+});
+$("#generalRodriguez").click(function() {
+    // 'GENERAL RODRIGUEZ':'06364',
+    zoomToDepto(7)
+});
+$("#generalSanMartin").click(function() {
+    // 'GENERAL SAN MARTIN':'06371',
+    zoomToDepto(8)
+});
+$("#hurlingham").click(function() {
+    // 'HURLINGHAM':'06408',
+    zoomToDepto(9)
+});
+$("#ituzaingo").click(function() {
+    // 'ITUZAINGO':'06410',
+    zoomToDepto(10)
+});
+$("#joseCPaz").click(function() {
+    // 'JOSE C PAZ':'06412',
+    zoomToDepto(11)
+});
+$("#laMatanza").click(function() {
+    // 'LA MATANZA':'06427',
+    zoomToDepto(12)
+});
+$("#lanus").click(function() {
+    // 'LANUS':'06434',
+    zoomToDepto(13)
+});
+$("#lomasDeZamora").click(function() {
+    // 'LOMAS DE ZAMORA':'06490',
+    zoomToDepto(14)
+});
+$("#malvinasArgentinas").click(function() {
+    // 'MALVINAS ARGENTINAS':'06515',
+    zoomToDepto(15)
+});
+$("#marcosPaz").click(function() {
+    // 'MARCOS PAZ':'06525',
+    zoomToDepto(16)
+});
+$("#merlo").click(function() {
+    // 'MERLO':'06539',
+    zoomToDepto(17)
+});
+$("#moreno").click(function() {
+    // 'MORENO':'06560',
+    zoomToDepto(18)
+});
+$("#moron").click(function() {
+    // 'MORON':'06568',
+    zoomToDepto(19)
+});
+$("#pilar").click(function() {
+    // 'PILAR':'06638',
+    zoomToDepto(20)
+});
+$("#presidentePeron").click(function() {
+    // 'PRESIDENTE PERON':'06648',
+    zoomToDepto(21)
+});
+$("#quilmes").click(function() {
+    // 'QUILMES':'06658',
+    zoomToDepto(22)
+});
+$("#sanFernando").click(function() {
+    // 'SAN FERNANDO':'06749',
+    zoomToDepto(23)
+});
+$("#sanIsidro").click(function() {
+    // 'SAN ISIDRO':'06756',
+    zoomToDepto(24)
+});
+$("#sanMiguel").click(function() {
+    // 'SAN MIGUEL':'06760',
+    zoomToDepto(25)
+});
+$("#sanVicente").click(function() {
+    // 'SAN VICENTE':'06778',
+    zoomToDepto(26)
+});
+$("#tigre").click(function() {
+    // 'TIGRE':'06805',
+    zoomToDepto(27)
+});
 
-
+$("#tresDeFebrero").click(function() {
+    // 'TRES DE FEBRERO':'06840',
+    zoomToDepto(28)
+});
+$("#vicenteLopex").click(function() {
+    // 'VICENTE LOPEZ':'06861'
+    zoomToDepto(29)
+});
 
 
 
