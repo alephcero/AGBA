@@ -159,7 +159,7 @@ info.update = function (props) {
         } 
         this._div.innerHTML = '<h4>Census Block Information</h4>' + 
         '<b> Block ID: </b>' + props.REDCODE + '<br />' +
-        '<b> Comune: </b>' + props.Comune + '<br />' + 
+        '<b> Department: </b>' + props.DEPTO_NAME + '<br />' + 
         '<b>' + variableText + ': </b>' + percent + '<br />'  +
         '<b> Quantile: </b>' + quantile  + '<br />'
         
