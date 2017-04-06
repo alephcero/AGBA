@@ -77,9 +77,12 @@ html, body, #container {
 .percent{
   display: none;
 }
+.jenks{
+  display: none;
+}
 
 .btn-group{
-  margin-left: 30%;
+  margin-left: 20%;
   margin-bottom: 10px;
 }
 

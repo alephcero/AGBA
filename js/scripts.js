@@ -29,7 +29,23 @@ function getColor(d,unit) {
         d >= 10  ? '#f7fcfd' :
         //if none
         '#FFFFFF';
-    } else {
+    }
+    else if(unit == 'jenks') {
+        return  d == 0 ? '#a50026' :
+        d == 1  ? '#d73027' :
+        d == 2  ? '#f46d43' :
+        d == 3  ? '#fdae61' :
+        d == 4  ? '#fee08b' :
+        d == 5  ? '#d9ef8b' :
+        d == 6  ? '#a6d96a' :
+        d == 7  ? '#66bd63' :
+        d == 8  ? '#1a9850' :
+        d == 9 ? '#006837' :
+        //if none
+        '#FFFFFF'; 
+    } 
+    else
+     {
         return  d == 0 ? '#67001f' :
         d == 1  ? '#b2182b' :
         d == 2  ? '#d6604d' :
@@ -100,7 +116,18 @@ function resetHighlight(e) {
         if (currentMap == 'Owner') {var propReset = layer.feature.properties.PROP_p}
         if (currentMap == 'Rent') {var propReset = layer.feature.properties.INQ_p}
         if (currentMap == 'Regular') {var propReset = layer.feature.properties.TENREG_p}
-    } else {
+    } 
+    else if (unitOfDisplay == 'jenks') {
+        if (currentMap == 'Education') {var propReset = layer.feature.properties.MNI_j}
+        if (currentMap == 'Inmigration') {var propReset = layer.feature.properties.P05_j}
+        if (currentMap == 'Celular') {var propReset = layer.feature.properties.H2819C_j}
+        if (currentMap == 'Computer') {var propReset = layer.feature.properties.H2819B_j}
+        if (currentMap == 'Empty') {var propReset = layer.feature.properties.V02_j}
+        if (currentMap == 'Owner') {var propReset = layer.feature.properties.PROP_j}
+        if (currentMap == 'Rent') {var propReset = layer.feature.properties.INQ_j}
+        if (currentMap == 'Regular') {var propReset = layer.feature.properties.TENREG_j}
+    }
+    else {
         if (currentMap == 'Education') {var propReset = layer.feature.properties.MNI_q}
         if (currentMap == 'Inmigration') {var propReset = layer.feature.properties.P05_q}
         if (currentMap == 'Celular') {var propReset = layer.feature.properties.H2819C_q}
@@ -145,24 +172,63 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    var variableText, percent,quantile
+    var variableText, percent,quantile,jenk
     if(props){
         if (currentMap == 'Education') {
             variableText = 'Head of household with college education (%)';
             percent = props.MNI_p;
             quantile = props.MNI_q;
+            jenk = props.MNI_j;
         }
-        if (currentMap == 'Inmigration') {
+        else if (currentMap == 'Inmigration') {
             variableText = 'Head of household borned in another country (%)';
             percent = props.P05_p;
             quantile = props.P05_q;
-        } 
+            jenk = props.P05_j;
+        }
+        else if (currentMap == 'Celular') {
+            variableText = 'Household with mobile phone (%)';
+            percent = props.H2819C_p;
+            quantile = props.H2819C_q;
+            jenk = props.H2819C_j;
+        }
+        else if (currentMap == 'Computer') {
+            variableText = 'Household with a computer (%)';
+            percent = props.H2819B_p;
+            quantile = props.H2819B_q;
+            jenk = props.H2819B_j;
+        }
+        else if (currentMap == 'Empty') {
+            variableText = 'Empty dwellings (%)';
+            percent = props.V02_p;
+            quantile = props.V02_q;
+            jenk = props.V02_j;
+        }
+        else if (currentMap == 'Owner') {
+            variableText = 'Owners (%)';
+            percent = props.PROP_p;
+            quantile = props.PROP_q;
+            jenk = props.PROP_j;
+        }
+        else if (currentMap == 'Rent') {
+            variableText = 'Tennants (%)';
+            percent = props.INQ_p;
+            quantile = props.INQ_q;
+            jenk = props.INQ_j;
+        }
+        else if (currentMap == 'Regular') {
+            variableText = 'Legally occupied household (%)';
+            percent = props.TENREG_p;
+            quantile = props.TENREG_q;
+            jenk = props.TENREG_j;
+        }
+
         this._div.innerHTML = '<h4>Census Block Information</h4>' + 
         '<b> Block ID: </b>' + props.REDCODE + '<br />' +
         '<b> Department: </b>' + props.DEPTO_NAME + '<br />' + 
         '<b>' + variableText + ': </b>' + percent + '<br />'  +
-        '<b> Quantile: </b>' + quantile  + '<br />'
-        
+        '<b> Quantile: </b>' + quantile  + '<br />' +
+        '<b> Jenks Natural Breaks: </b>' + jenk  + '<br />'
     } else {
         this._div.innerHTML = '<h4>Census Block Information</h4>' + 'Hover over a block'
     }
@@ -170,7 +236,9 @@ info.update = function (props) {
 };
 
 
-//legend
+//LEGENDS
+
+    //quantile
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -189,6 +257,26 @@ legend.onAdd = function (map) {
     return div;
 };
 
+    //jenks
+var legendJenks = L.control({position: 'bottomright'});
+
+legendJenks.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend jenks'),
+        grades = [0, 1, 2, 3, 4, 5, 6, 7,8,9],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i],'jenks') + '"></i> ' +
+            grades[i] + ' J <br />';
+    }
+
+    return div;
+};
+
+    //percent
 var legendPercent = L.control({position: 'bottomright'});
 
 legendPercent.onAdd = function (map) {
@@ -226,6 +314,7 @@ geojson.addTo(map);
 
 legend.addTo(map);
 legendPercent.addTo(map);
+legendJenks.addTo(map);
 
 info.addTo(map);
 
@@ -380,29 +469,57 @@ $("#vicenteLopex").click(function() {
 
 $("#percentButton").click(function() {
     unitOfDisplay = 'percent'
+
     $('.percent').css('display','initial');
-    
+    $('.quantile').css('display','none');
+    $('.jenks').css('display','none');
+
     $('#percentButton').css('background','#8c6bb1');
     $('#percentButton').css('color','white');
 
     $('#quantileButton').css('background','initial');
     $('#quantileButton').css('color','initial');
 
+    $('#jenksButton').css('background','initial');
+    $('#jenksButton').css('color','initial');
 
-    $('.quantile').css('display','none');
 });
 
 $("#quantileButton").click(function() {
     unitOfDisplay = 'quantile';
+
     $('.percent').css('display','none');
+    $('.quantile').css('display','initial');
+    $('.jenks').css('display','none');
+
     $('#quantileButton').css('background','#d6604d');
     $('#quantileButton').css('color','white');
 
     $('#percentButton').css('background','initial');
     $('#percentButton').css('color','initial');
 
+    $('#jenksButton').css('background','initial');
+    $('#jenksButton').css('color','initial');
 
-    $('.quantile').css('display','initial');
+
+});
+
+$("#jenksButton").click(function() {
+    unitOfDisplay = 'jenks';
+
+    $('.percent').css('display','none');
+    $('.quantile').css('display','none');
+    $('.jenks').css('display','initial');
+
+    $('#quantileButton').css('background','initial');
+    $('#quantileButton').css('color','initial');
+
+    $('#percentButton').css('background','initial');
+    $('#percentButton').css('color','initial');
+
+    $('#jenksButton').css('background','#006837');
+    $('#jenksButton').css('color','white');
+
 });
 
 //BUTTON BEHAVIOUR
@@ -413,7 +530,14 @@ $('#buttonEduc').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.MNI_p,unitOfDisplay));
         });
-    } else {
+    } 
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.MNI_j,unitOfDisplay));
+        });
+    }
+
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.MNI_q,unitOfDisplay));
         });
@@ -428,7 +552,14 @@ $('#buttonInmigration').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.P05_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.P05_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.P05_q,unitOfDisplay));
         });
@@ -444,7 +575,14 @@ $('#buttonCel').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.H2819C_q,unitOfDisplay));
         });
@@ -460,7 +598,14 @@ $('#buttonComp').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.H2819B_q,unitOfDisplay));
         });
@@ -478,7 +623,15 @@ $('#buttonEmpty').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.V02_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.V02_j,unitOfDisplay));
+        });
+    }
+
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.V02_q,unitOfDisplay));
         });
@@ -495,7 +648,14 @@ $('#buttonOwner').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.PROP_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.PROP_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.PROP_q,unitOfDisplay));
         });
@@ -511,7 +671,14 @@ $('#buttonRent').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.INQ_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.INQ_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.INQ_q,unitOfDisplay));
         });
@@ -526,7 +693,14 @@ $('#buttonRegular').on('click', function(){
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_p,unitOfDisplay));
         });
-    } else {
+    } 
+
+    else if (unitOfDisplay == 'jenks') {
+        geojson.eachLayer(function (layer) {
+            layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_j,unitOfDisplay));
+        });
+    }
+    else {
         geojson.eachLayer(function (layer) {
             layer.setStyle(style(layer.feature,layer.feature.properties.TENREG_q,unitOfDisplay));
         });
